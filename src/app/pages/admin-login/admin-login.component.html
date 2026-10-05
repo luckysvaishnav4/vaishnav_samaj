@@ -1,0 +1,24 @@
+<section class="admin-login-page">
+  <div class="admin-login-card">
+    <a routerLink="/" class="admin-brand"><i class="bi bi-flower1"></i><span>Vaishnav Samaj<small>ADMINISTRATION</small></span></a>
+    <span class="eyebrow">Secure access</span>
+    <h1>Admin <em>sign in</em></h1>
+    <p>Sign in with an account approved by the Samaj administrator.</p>
+    @if (!api.isConfigured) {
+      <div class="alert alert-warning" role="alert">The PostgreSQL API is not configured. {{ api.configurationError || 'Add the API base URL to the runtime configuration.' }}</div>
+    } @else {
+      <form (ngSubmit)="submit()" #loginForm="ngForm">
+        <label class="form-label" for="admin-email">Email address</label>
+        <input class="form-control mb-3" id="admin-email" name="email" type="email" [(ngModel)]="email" required autocomplete="username">
+        <label class="form-label" for="admin-password">Password</label>
+        <input class="form-control mb-3" id="admin-password" name="password" type="password" [(ngModel)]="password" required autocomplete="current-password">
+        @if (error) { <div class="alert alert-danger" role="alert">{{ error }}</div> }
+        <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isSubmitting">
+          @if (isSubmitting) { <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span> }
+          Sign in securely
+        </button>
+      </form>
+    }
+    <a routerLink="/" class="back-link"><i class="bi bi-arrow-left me-2"></i>Back to community site</a>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #6b1f2a;
+  --secondary-color: #bd9259;
+  --accent-color: #e6c77f;
+  --text-color: #342b28;
+  --light-bg: #f8f4ef;
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: "DM Sans", "Segoe UI", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+:root { scroll-behavior: auto; }
+html { scroll-padding-top: 90px; }
+body { margin: 0; color: var(--text-color); font-family: var(--sans); font-size: 16px; background: #fff; -webkit-font-smoothing: antialiased; }
+.numeric { font-family: var(--sans); font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; letter-spacing: normal; }
+a { transition: color .18s ease, background-color .18s ease, border-color .18s ease; }
+button, input, select, textarea { font-family: inherit; }
+.btn { border-radius: 3px; font-weight: 600; }
+.btn-primary { background: var(--primary-color); border-color: var(--primary-color); }
+.btn-primary:hover, .btn-primary:focus { background: #511922; border-color: #511922; }
+.btn-gold { color: #39231b; background: #f0d38e; border: 1px solid #f0d38e; font-weight: 700; }
+.btn-gold:hover, .btn-gold:focus-visible { color: #2e1c16; background: #ffe8ae; border-color: #ffe8ae; }
+.btn-outline-primary { color: var(--primary-color); border-color: #b9857a; }
+.btn-outline-primary:hover, .btn-outline-primary:focus { color: #fff; background: var(--primary-color); border-color: var(--primary-color); }
+:focus-visible { outline: 3px solid #d5ad65; outline-offset: 3px; }
+::selection { color: #fff; background: var(--primary-color); }
+.eyebrow { color: #936d43; font-size: .76rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.eyebrow.eyebrow-light { color: #f1d18b; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

@@ -1,0 +1,26 @@
+<article class="profile-card h-100">
+  <a class="profile-photo" [routerLink]="['/profile', profile.id]" [attr.aria-label]="'View ' + profile.name + ' profile'">
+    @if (profile.image) { <img [src]="profile.image" [alt]="profile.name" loading="lazy"> } @else { <span class="profile-photo-placeholder" aria-hidden="true"><i class="bi bi-person"></i></span> }
+    @if (profile.verified && profile.isDemo !== false) { <span class="verified-pill"><i class="bi bi-patch-check-fill me-1"></i>Demo verified</span> }
+    @if (profile.active) { <span class="online-dot" [title]="profile.isDemo === false ? 'Recently active' : 'Sample recently active status'"></span> }
+  </a>
+  <div class="profile-content">
+    <div class="d-flex justify-content-between align-items-start gap-2">
+      <div><h3>{{ profile.name }}</h3><p class="profile-meta"><span class="numeric">{{ profile.age }}</span> years <span>·</span> {{ profile.city }}</p></div>
+      <span class="profile-gender">{{ profile.gender }}</span>
+    </div>
+    <div class="profile-facts"><span><i class="bi bi-flower1"></i>{{ profile.gotra }}</span><span><i class="bi bi-mortarboard"></i>{{ profile.education }}</span></div>
+    <p class="profile-profession">{{ profile.profession }}</p>
+    <p class="profile-intro">{{ profile.introduction }}</p>
+    <div class="d-flex gap-2 mt-auto">
+      <a class="btn btn-outline-primary btn-sm flex-grow-1" [routerLink]="['/profile', profile.id]">View profile</a>
+      <button class="btn btn-interest btn-sm flex-grow-1" type="button" (click)="sendInterest()" [disabled]="interested || isSending">
+        @if (isSending) { <span class="spinner-border spinner-border-sm me-1"></span> } @else { <i class="bi" [class.bi-heart]="!interested" [class.bi-heart-fill]="interested"></i> }
+        {{ interested ? 'Interest sent' : (isSending ? 'Sending…' : 'Send interest') }}
+      </button>
+    </div>
+    @if (interested && profile.isDemo !== false) { <p class="interest-note mb-0 mt-2"><i class="bi bi-info-circle me-1"></i>Demo only — no request was sent.</p> }
+    @if (interested && profile.isDemo === false) { <p class="interest-note mb-0 mt-2"><i class="bi bi-check-circle me-1"></i>Request sent privately.</p> }
+    @if (interestError) { <p class="interest-note interest-error mb-0 mt-2" role="alert">{{ interestError }}</p> }
+  </div>
+</article>

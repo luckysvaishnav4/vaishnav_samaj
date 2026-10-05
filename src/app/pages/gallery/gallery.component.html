@@ -1,0 +1,11 @@
+<section class="gallery-banner"><div class="container"><span class="eyebrow eyebrow-light">Our memories, together</span><h1>Moments that make <em>us.</em></h1><p>A glimpse of the gatherings, traditions and little moments that bring our community to life.</p><div class="gallery-demo"><i class="bi bi-info-circle me-2"></i>@if (demoMode) { Illustrative images for the demo — not official Samaj event photography. } @else { Images are published by the community administrator. }</div></div></section>
+<section class="gallery-section"><div class="container">
+  <div class="gallery-toolbar"><div><span class="eyebrow">Community gallery</span><h2>Life in the <em>Samaj</em></h2></div><div class="gallery-filters" aria-label="Filter gallery">@for (category of categories; track category) { <button type="button" [class.active]="selectedCategory === category" (click)="selectedCategory = category">{{ category }}</button> }</div></div>
+  @if (isLoading) { <p role="status" class="gallery-note"><span class="spinner-border spinner-border-sm me-2"></span>Loading community gallery…</p> }
+  @if (loadError) { <p role="alert" class="gallery-note">{{ loadError }}</p> }
+  @if (!isLoading && !loadError && !visibleItems.length) { <p class="gallery-note">No published photos are available yet.</p> }
+  <div class="row g-3 gallery-grid">@for (item of visibleItems; track item.id ?? item.title) {
+    <div class="col-sm-6 col-lg-4"><article class="gallery-item" [class.tall]="item.shape === 'tall'" [class.wide]="item.shape === 'wide'"><img [src]="item.image" [alt]="item.title" loading="lazy"><div class="gallery-caption"><span>{{ item.category }}</span><h3>{{ item.title }}</h3></div></article></div>
+  }</div>
+  <div class="gallery-note"><i class="bi bi-camera"></i><p>Have a community memory to share? <a routerLink="/contact">Get in touch</a> with the Samaj office. A future gallery will only feature photos shared with permission.</p></div>
+</div></section>

@@ -1,0 +1,36 @@
+<section class="form-banner"><div class="container"><span class="eyebrow eyebrow-light">Your story belongs here</span><h1>Create your <em>community profile</em></h1><p>Share a little about yourself and help us shape a welcoming space for future connections.</p><div class="demo-ribbon"><i class="bi bi-info-circle me-2"></i>@if (api.isConfigured) { Your profile is private by default. You choose later if community members can view it. } @else { Demo mode — this form will not send or save personal information. }</div></div></section>
+<section class="register-section"><div class="container"><div class="row g-4 justify-content-center">
+  <div class="col-lg-8">
+  @if (existingProfile) {
+    <div class="profile-form"><h2>Your profile is already set up</h2><p>You are signed in with this account. Manage your privacy settings or sign out to create a separate account.</p><a class="btn btn-primary" routerLink="/my-profile">Manage my profile</a></div>
+  } @else {
+  <form class="profile-form" (ngSubmit)="submitProfile()" #profileForm="ngForm">
+    <div class="form-section-heading"><span>01</span><div><h2>About you</h2><p>Basic information to introduce yourself to the community. You must be 18 or older.</p></div></div>
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label" for="fullName">Full name <span>*</span></label><input class="form-control" id="fullName" name="fullName" [(ngModel)]="profile.fullName" required maxlength="100" placeholder="Your name"></div>
+      <div class="col-md-6"><label class="form-label" for="gender">Gender <span>*</span></label><select class="form-select" id="gender" name="gender" [(ngModel)]="profile.gender" required><option value="" disabled>Select</option><option>Man</option><option>Woman</option><option>Prefer not to say</option></select></div>
+      <div class="col-md-6"><label class="form-label" for="dob">Date of birth <span>*</span></label><input class="form-control" type="date" id="dob" name="dob" [(ngModel)]="profile.dob" [max]="maxDateOfBirth" required></div>
+      <div class="col-md-6"><label class="form-label" for="gotra">Gotra <span>*</span></label><select class="form-select" id="gotra" name="gotra" [(ngModel)]="profile.gotra" required><option value="">Choose gotra</option>@for (gotra of profileGotras; track gotra.name) { <option [value]="gotra.name">{{ gotra.name }}</option> }</select></div>
+      <div class="col-md-6"><label class="form-label" for="city">City <span>*</span></label><input class="form-control" id="city" name="city" [(ngModel)]="profile.city" required maxlength="120" placeholder="Your city"></div>
+      <div class="col-md-6"><label class="form-label" for="education">Education</label><input class="form-control" id="education" name="education" [(ngModel)]="profile.education" maxlength="200" placeholder="Your education"></div>
+      <div class="col-12"><label class="form-label" for="profession">Profession</label><input class="form-control" id="profession" name="profession" [(ngModel)]="profile.profession" maxlength="200" placeholder="Your current role or field"></div>
+      <div class="col-12"><label class="form-label" for="about">A little about you</label><textarea class="form-control" id="about" name="about" rows="4" [(ngModel)]="profile.about" maxlength="3000" placeholder="Share what matters to you, your interests and what you hope to find in this community."></textarea><div class="form-text">Please avoid including phone numbers or other sensitive personal details.</div></div>
+      <div class="col-12"><label class="form-label" for="photo">Profile photo</label><input class="form-control" type="file" id="photo" accept="image/jpeg,image/png,image/webp" (change)="choosePhoto($event)"><div class="form-text">{{ photoName || 'Optional. JPEG, PNG, or WebP; maximum 5 MB. Photos are stored privately on the API server.' }}</div></div>
+    </div>
+    <div class="form-divider"></div>
+    <div class="form-section-heading"><span>02</span><div><h2>Family & account</h2><p>Contact information is private and never shown in the member directory.</p></div></div>
+    <div class="row g-3">
+      <div class="col-12"><label class="form-label" for="family">Family information</label><textarea class="form-control" id="family" name="family" rows="3" [(ngModel)]="profile.family" maxlength="2000" placeholder="Share a brief introduction to your family"></textarea></div>
+      <div class="col-md-6"><label class="form-label" for="email">Email address <span>*</span></label><input class="form-control" type="email" id="email" name="email" [(ngModel)]="profile.email" required email autocomplete="email" [readonly]="isExistingAccount" placeholder="you@example.com"></div>
+      @if (api.isConfigured && !isExistingAccount) { <div class="col-md-6"><label class="form-label" for="password">Password <span>*</span></label><input class="form-control" type="password" id="password" name="password" [(ngModel)]="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div> }
+      <div class="col-12"><label class="form-label" for="phone">Phone number <span class="text-muted">(private, optional)</span></label><input class="form-control" type="tel" id="phone" name="phone" [(ngModel)]="profile.phone" maxlength="30" autocomplete="tel" placeholder="Your phone number"></div>
+    </div>
+    <div class="privacy-notice"><i class="bi bi-shield-lock"></i><p><strong>Your profile starts private.</strong><br>Other members cannot see it until you sign in and choose community visibility. Phone and email remain private; profile photos use private storage.</p></div>
+    <div class="form-submit"><label class="terms-check"><input type="checkbox" name="terms" ngModel required><span>I am 18 or older and agree to create an account and store this profile securely. I understand it will remain private until I choose to share it.</span></label><button class="btn btn-primary btn-lg" type="submit" [disabled]="profileForm.invalid || isSubmitting">@if (isSubmitting) { <span class="spinner-border spinner-border-sm me-2"></span> }Create profile <i class="bi bi-arrow-right ms-2"></i></button></div>
+    @if (error) { <div class="submit-feedback submit-error" role="alert"><i class="bi bi-exclamation-circle me-2"></i>{{ error }}</div> }
+    @if (submitted) { <div class="submit-feedback" role="status"><i class="bi bi-check-circle me-2"></i>{{ info }} @if (needsMemberLogin) { <a routerLink="/member-login" class="d-block mt-2">Go to member sign in</a> } @else if (api.isConfigured) { <a routerLink="/my-profile" class="d-block mt-2">Manage profile visibility</a> }</div> }
+  </form>
+  }
+  </div>
+  <aside class="col-lg-3"><div class="form-aside"><i class="bi bi-heart"></i><h2>A good introduction begins with you.</h2><p>Share only what feels comfortable. Your safety and privacy always come first.</p><ul><li><i class="bi bi-check2"></i>No public contact details</li><li><i class="bi bi-check2"></i>Private by default</li><li><i class="bi bi-check2"></i>Respectful introductions</li></ul><small>Never share your password with anyone.</small></div></aside>
+</div></div></section>

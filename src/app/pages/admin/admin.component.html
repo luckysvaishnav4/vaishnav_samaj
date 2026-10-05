@@ -1,0 +1,142 @@
+<section class="admin-shell">
+  <div class="container py-4 py-lg-5">
+    <header class="admin-header">
+      <div><span class="eyebrow">VAISHNAV SAMAJ · CONTENT STUDIO</span><h1>Welcome to your <em>workspace</em></h1><p>Manage the public website and community from one secure dashboard.</p></div>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-primary" routerLink="/"><i class="bi bi-box-arrow-up-right me-2"></i>View website</a>
+        <button class="btn btn-outline-secondary" type="button" (click)="loadContent()" [disabled]="isLoading"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button>
+        <button class="btn btn-primary" type="button" (click)="signOut()"><i class="bi bi-box-arrow-right me-2"></i>Sign out</button>
+      </div>
+    </header>
+
+    @if (error) { <div class="alert alert-danger" role="alert"><i class="bi bi-exclamation-triangle me-2"></i>{{ error }}</div> }
+    @if (notice) { <div class="alert alert-success" role="status"><i class="bi bi-check-circle me-2"></i>{{ notice }}</div> }
+
+    <section class="overview-grid" aria-label="Community overview">
+      <article class="overview-card"><span>Community profiles</span><strong>{{ overview.members }}</strong><small>{{ overview.pending_profiles }} awaiting approval</small><i class="bi bi-people"></i></article>
+      <article class="overview-card"><span>Events</span><strong>{{ overview.events }}</strong><small>{{ events.length }} managed listings</small><i class="bi bi-calendar-heart"></i></article>
+      <article class="overview-card"><span>Announcements</span><strong>{{ overview.announcements }}</strong><small>Public notices & drafts</small><i class="bi bi-megaphone"></i></article>
+      <article class="overview-card"><span>Website collection</span><strong>{{ overview.gotras + overview.gallery_items }}</strong><small>{{ overview.gotras }} gotras · {{ overview.gallery_items }} gallery items</small><i class="bi bi-grid-1x2"></i></article>
+    </section>
+
+    <div class="workspace-toolbar">
+      <nav class="admin-tabs" aria-label="Admin management sections">
+        <button type="button" [class.active]="section === 'events'" (click)="selectSection('events')"><i class="bi bi-calendar-event"></i> Events <span>{{ events.length }}</span></button>
+        <button type="button" [class.active]="section === 'announcements'" (click)="selectSection('announcements')"><i class="bi bi-megaphone"></i> Notices <span>{{ announcements.length }}</span></button>
+        <button type="button" [class.active]="section === 'gotras'" (click)="selectSection('gotras')"><i class="bi bi-flower1"></i> Gotras <span>{{ gotras.length }}</span></button>
+        <button type="button" [class.active]="section === 'gallery'" (click)="selectSection('gallery')"><i class="bi bi-images"></i> Gallery <span>{{ galleryItems.length }}</span></button>
+        <button type="button" [class.active]="section === 'members'" (click)="selectSection('members')"><i class="bi bi-person-check"></i> Members <span>{{ overview.pending_profiles }}</span></button>
+        <button type="button" [class.active]="section === 'pages'" (click)="selectSection('pages')"><i class="bi bi-window-stack"></i> Page content</button>
+      </nav>
+      @if (section !== 'pages') {
+        <label class="admin-search"><i class="bi bi-search"></i><span class="visually-hidden">Search this section</span><input class="form-control" type="search" [(ngModel)]="searchTerm" placeholder="Search this section"></label>
+      }
+    </div>
+
+    @if (isLoading) {
+      <div class="admin-panel admin-loading" role="status"><span class="spinner-border spinner-border-sm me-2"></span>Loading your community workspace…</div>
+    } @else if (section === 'events') {
+      <div class="row g-4 align-items-start">
+        <div class="col-xl-7"><section class="admin-panel">
+          <div class="panel-heading"><div><span class="eyebrow">PUBLIC PROGRAMME</span><h2>Community events</h2></div><span class="count-chip">{{ filteredEvents.length }} of {{ events.length }}</span></div>
+          @if (!filteredEvents.length) { <p class="empty-admin">{{ events.length ? 'No events match your search.' : 'No events yet. Create your first event.' }}</p> }
+          @for (event of filteredEvents; track event.id) {
+            <article class="content-row">
+              <div class="content-row-main"><div class="d-flex flex-wrap align-items-center gap-2"><h3>{{ event.title }}</h3><span class="status-pill" [class.published]="event.is_published">{{ event.is_published ? 'Published' : 'Draft' }}</span></div><p><i class="bi bi-calendar3 me-2"></i>{{ event.starts_at | date:'medium' }} <span class="mx-2">·</span>{{ event.venue || 'Venue not set' }}</p><p class="summary-preview">{{ event.category }} · {{ event.description }}</p></div>
+              <div class="row-actions"><button class="btn btn-sm btn-outline-primary" type="button" (click)="editEvent(event)" aria-label="Edit event"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteEvent(event)" aria-label="Delete event"><i class="bi bi-trash"></i></button></div>
+            </article>
+          }
+        </section></div>
+        <div class="col-xl-5"><form class="admin-panel admin-form" (ngSubmit)="saveEvent()" #eventForm="ngForm">
+          <div class="panel-heading"><div><span class="eyebrow">{{ editingEventId ? 'UPDATE LISTING' : 'CREATE LISTING' }}</span><h2>{{ editingEventId ? 'Edit event' : 'Add an event' }}</h2></div></div>
+          <label class="form-label" for="event-title">Event name *</label><input class="form-control" id="event-title" name="eventTitle" [(ngModel)]="eventDraft.title" required maxlength="200">
+          <label class="form-label" for="event-date">Date and time *</label><input class="form-control" id="event-date" name="eventDate" type="datetime-local" [(ngModel)]="eventDraft.starts_at" required>
+          <div class="row g-3"><div class="col-md-6"><label class="form-label" for="event-category">Category</label><input class="form-control" id="event-category" name="eventCategory" [(ngModel)]="eventDraft.category" required maxlength="80"></div><div class="col-md-6"><label class="form-label" for="event-venue">Venue</label><input class="form-control" id="event-venue" name="eventVenue" [(ngModel)]="eventDraft.venue" maxlength="240"></div></div>
+          <label class="form-label" for="event-image">Image URL <span class="optional-label">(optional)</span></label><input class="form-control" id="event-image" name="eventImage" type="url" [(ngModel)]="eventDraft.image_url" placeholder="https://…">
+          <label class="form-label" for="event-description">Description</label><textarea class="form-control" id="event-description" name="eventDescription" [(ngModel)]="eventDraft.description" rows="4" maxlength="3000"></textarea>
+          <label class="publish-toggle"><input type="checkbox" name="eventPublished" [(ngModel)]="eventDraft.is_published"><span>Publish this event on the public website</span></label>
+          <div class="d-flex flex-wrap gap-2 mt-3"><button class="btn btn-primary" type="submit" [disabled]="eventForm.invalid || isSaving"><i class="bi bi-check2 me-2"></i>{{ isSaving ? 'Saving…' : (editingEventId ? 'Update event' : 'Save event') }}</button>@if (editingEventId) { <button class="btn btn-outline-secondary" type="button" (click)="cancelEdit()">Cancel</button> }</div>
+        </form></div>
+      </div>
+    } @else if (section === 'announcements') {
+      <div class="row g-4 align-items-start">
+        <div class="col-xl-7"><section class="admin-panel">
+          <div class="panel-heading"><div><span class="eyebrow">SAMAAJ NOTICEBOARD</span><h2>Announcements</h2></div><span class="count-chip">{{ filteredAnnouncements.length }} of {{ announcements.length }}</span></div>
+          @if (!filteredAnnouncements.length) { <p class="empty-admin">{{ announcements.length ? 'No notices match your search.' : 'No announcements yet. Write your first community update.' }}</p> }
+          @for (item of filteredAnnouncements; track item.id) {
+            <article class="content-row"><div class="content-row-main"><div class="d-flex flex-wrap align-items-center gap-2"><h3>{{ item.title }}</h3><span class="status-pill" [class.published]="item.is_published">{{ item.is_published ? 'Published' : 'Draft' }}</span></div><p><i class="bi bi-clock me-2"></i>{{ item.published_at | date:'medium' }}</p><p class="summary-preview">{{ item.summary }}</p></div><div class="row-actions"><button class="btn btn-sm btn-outline-primary" type="button" (click)="editAnnouncement(item)" aria-label="Edit announcement"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteAnnouncement(item)" aria-label="Delete announcement"><i class="bi bi-trash"></i></button></div></article>
+          }
+        </section></div>
+        <div class="col-xl-5"><form class="admin-panel admin-form" (ngSubmit)="saveAnnouncement()" #announcementForm="ngForm">
+          <div class="panel-heading"><div><span class="eyebrow">{{ editingAnnouncementId ? 'UPDATE NOTICE' : 'NEW NOTICE' }}</span><h2>{{ editingAnnouncementId ? 'Edit announcement' : 'Write a notice' }}</h2></div></div>
+          <label class="form-label" for="announcement-title">Title *</label><input class="form-control" id="announcement-title" name="announcementTitle" [(ngModel)]="announcementDraft.title" required maxlength="200">
+          <label class="form-label" for="announcement-date">Publish date *</label><input class="form-control" id="announcement-date" name="announcementDate" type="datetime-local" [(ngModel)]="announcementDraft.published_at" required>
+          <label class="form-label" for="announcement-summary">Notice *</label><textarea class="form-control" id="announcement-summary" name="announcementSummary" [(ngModel)]="announcementDraft.summary" rows="7" required maxlength="4000"></textarea>
+          <label class="publish-toggle"><input type="checkbox" name="announcementPublished" [(ngModel)]="announcementDraft.is_published"><span>Publish this notice on the public website</span></label>
+          <div class="d-flex flex-wrap gap-2 mt-3"><button class="btn btn-primary" type="submit" [disabled]="announcementForm.invalid || isSaving"><i class="bi bi-check2 me-2"></i>{{ isSaving ? 'Saving…' : (editingAnnouncementId ? 'Update notice' : 'Save announcement') }}</button>@if (editingAnnouncementId) { <button class="btn btn-outline-secondary" type="button" (click)="cancelEdit()">Cancel</button> }</div>
+        </form></div>
+      </div>
+    } @else if (section === 'gotras') {
+      <div class="row g-4 align-items-start">
+        <div class="col-xl-7"><section class="admin-panel">
+          <div class="panel-heading"><div><span class="eyebrow">COMMUNITY DIRECTORY</span><h2>Gotra directory</h2></div><span class="count-chip">{{ filteredGotras.length }} of {{ gotras.length }}</span></div>
+          @if (!filteredGotras.length) { <p class="empty-admin">No gotras match this search.</p> }
+          @for (gotra of filteredGotras; track gotra.id) {
+            <article class="content-row"><div class="content-row-main"><div class="d-flex flex-wrap align-items-center gap-2"><h3>{{ gotra.name }}</h3><span class="status-pill" [class.published]="gotra.is_published">{{ gotra.is_published ? 'Visible' : 'Hidden' }}</span></div><p>{{ gotra.tradition || 'Tradition not specified' }} · {{ gotra.members ?? 0 }} approved public profiles</p><p class="summary-preview">{{ gotra.description }}</p></div><div class="row-actions"><button class="btn btn-sm btn-outline-primary" type="button" (click)="editGotra(gotra)" aria-label="Edit gotra"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGotra(gotra)" aria-label="Delete gotra"><i class="bi bi-trash"></i></button></div></article>
+          }
+        </section></div>
+        <div class="col-xl-5"><form class="admin-panel admin-form" (ngSubmit)="saveGotra()" #gotraForm="ngForm">
+          <div class="panel-heading"><div><span class="eyebrow">{{ editingGotraId ? 'UPDATE LINEAGE' : 'DIRECTORY ENTRY' }}</span><h2>{{ editingGotraId ? 'Edit gotra' : 'Add a gotra' }}</h2></div></div>
+          <label class="form-label" for="gotra-name">Gotra name *</label><input class="form-control" id="gotra-name" name="gotraName" [(ngModel)]="gotraDraft.name" required maxlength="120">
+          <label class="form-label" for="gotra-tradition">Sampradaya / tradition</label><input class="form-control" id="gotra-tradition" name="gotraTradition" [(ngModel)]="gotraDraft.tradition" maxlength="160">
+          <label class="form-label" for="gotra-description">Description</label><textarea class="form-control" id="gotra-description" name="gotraDescription" [(ngModel)]="gotraDraft.description" rows="4" maxlength="1500"></textarea>
+          <label class="form-label" for="gotra-order">Display order</label><input class="form-control" id="gotra-order" name="gotraOrder" type="number" min="0" [(ngModel)]="gotraDraft.sort_order">
+          <label class="publish-toggle"><input type="checkbox" name="gotraPublished" [(ngModel)]="gotraDraft.is_published"><span>Show in public directory and registration form</span></label>
+          <div class="d-flex flex-wrap gap-2 mt-3"><button class="btn btn-primary" type="submit" [disabled]="gotraForm.invalid || isSaving"><i class="bi bi-check2 me-2"></i>{{ editingGotraId ? 'Update gotra' : 'Add gotra' }}</button>@if (editingGotraId) { <button class="btn btn-outline-secondary" type="button" (click)="cancelEdit()">Cancel</button> }</div>
+        </form></div>
+      </div>
+    } @else if (section === 'gallery') {
+      <div class="row g-4 align-items-start">
+        <div class="col-xl-7"><section class="admin-panel">
+          <div class="panel-heading"><div><span class="eyebrow">VISUAL STORIES</span><h2>Community gallery</h2></div><span class="count-chip">{{ filteredGalleryItems.length }} of {{ galleryItems.length }}</span></div>
+          <p class="panel-helper">Add image links you own or have permission to publish. Unpublished images remain off the public gallery.</p>
+          <div class="row g-3">@for (item of filteredGalleryItems; track item.id) {
+            <div class="col-sm-6"><article class="gallery-admin-card"><img [src]="item.image_url" [alt]="item.title" loading="lazy"><div class="gallery-admin-copy"><div class="d-flex justify-content-between align-items-center gap-2"><span class="status-pill" [class.published]="item.is_published">{{ item.is_published ? 'Published' : 'Draft' }}</span><span class="gallery-category">{{ item.category }}</span></div><h3>{{ item.title }}</h3><div class="row-actions"><button class="btn btn-sm btn-outline-primary" type="button" (click)="editGalleryItem(item)" aria-label="Edit gallery item"><i class="bi bi-pencil"></i> Edit</button><button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteGalleryItem(item)" aria-label="Delete gallery item"><i class="bi bi-trash"></i> Delete</button></div></div></article></div>
+          }</div>
+          @if (!filteredGalleryItems.length) { <p class="empty-admin">No gallery items match this search.</p> }
+        </section></div>
+        <div class="col-xl-5"><form class="admin-panel admin-form" (ngSubmit)="saveGalleryItem()" #galleryForm="ngForm">
+          <div class="panel-heading"><div><span class="eyebrow">{{ editingGalleryId ? 'UPDATE PHOTO' : 'ADD TO GALLERY' }}</span><h2>{{ editingGalleryId ? 'Edit gallery item' : 'Add an image' }}</h2></div></div>
+          <label class="form-label" for="gallery-title">Title *</label><input class="form-control" id="gallery-title" name="galleryTitle" [(ngModel)]="galleryDraft.title" required maxlength="200">
+          <label class="form-label" for="gallery-category">Category *</label><select class="form-select" id="gallery-category" name="galleryCategory" [(ngModel)]="galleryDraft.category" required><option>Community</option><option>Celebrations</option><option>Culture</option></select>
+          <label class="form-label" for="gallery-image">Image URL *</label><input class="form-control" id="gallery-image" name="galleryImage" type="url" [(ngModel)]="galleryDraft.image_url" required placeholder="https://…">
+          @if (galleryDraft.image_url) { <img class="gallery-preview" [src]="galleryDraft.image_url" alt="Gallery image preview"> }
+          <label class="form-label" for="gallery-shape">Display layout</label><select class="form-select" id="gallery-shape" name="galleryShape" [(ngModel)]="galleryDraft.shape"><option value="">Standard</option><option value="wide">Wide</option><option value="tall">Tall</option></select>
+          <label class="publish-toggle"><input type="checkbox" name="galleryPublished" [(ngModel)]="galleryDraft.is_published"><span>Publish this image in the community gallery</span></label>
+          <div class="d-flex flex-wrap gap-2 mt-3"><button class="btn btn-primary" type="submit" [disabled]="galleryForm.invalid || isSaving"><i class="bi bi-check2 me-2"></i>{{ editingGalleryId ? 'Update image' : 'Add image' }}</button>@if (editingGalleryId) { <button class="btn btn-outline-secondary" type="button" (click)="cancelEdit()">Cancel</button> }</div>
+        </form></div>
+      </div>
+    } @else if (section === 'members') {
+      <section class="admin-panel">
+        <div class="panel-heading"><div><span class="eyebrow">PRIVACY-FIRST MODERATION</span><h2>Member profiles</h2></div><span class="count-chip">{{ filteredMembers.length }} of {{ members.length }}</span></div>
+        <div class="privacy-reminder"><i class="bi bi-shield-lock me-2"></i>Member email and phone are not shown here. Approval only permits directory visibility if the member separately opted in to community sharing.</div>
+        <div class="member-table-wrap"><table class="table align-middle member-table"><thead><tr><th scope="col">Member</th><th scope="col">Community details</th><th scope="col">Visibility</th><th scope="col">Account</th><th scope="col" class="text-end">Moderation</th></tr></thead><tbody>
+          @for (member of filteredMembers; track member.id) {
+            <tr><td><strong>{{ member.display_name }}</strong><small>{{ member.gender }} · {{ member.age }} years</small></td><td>{{ member.gotra }}<small>{{ member.city }}</small></td><td><span class="status-pill" [class.published]="member.is_approved && member.visibility === 'community'">{{ member.is_approved ? (member.visibility === 'community' ? 'Community-visible' : 'Private') : 'Unapproved' }}</span></td><td><span class="status-pill" [class.suspended]="member.is_suspended">{{ member.is_suspended ? 'Suspended' : 'Active' }}</span></td><td><div class="row-actions justify-content-end">@if (!member.is_approved) { <button class="btn btn-sm btn-outline-success" type="button" (click)="setMemberApproval(member, true)">Approve</button> } @else { <button class="btn btn-sm btn-outline-secondary" type="button" (click)="setMemberApproval(member, false)">Hide</button> }<button class="btn btn-sm btn-outline-warning" type="button" (click)="setMemberSuspension(member, !member.is_suspended)">{{ member.is_suspended ? 'Restore' : 'Suspend' }}</button><button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteMember(member)" aria-label="Delete member"><i class="bi bi-trash"></i></button></div></td></tr>
+          }
+        </tbody></table></div>
+        @if (!filteredMembers.length) { <p class="empty-admin">No community profiles{{ searchTerm ? ' match this search' : ' have been created yet' }}.</p> }
+      </section>
+    } @else {
+      <div class="row g-4 align-items-start">
+        <div class="col-xl-3"><nav class="page-picker admin-panel" aria-label="Select website page to edit"><span class="eyebrow">PUBLIC PAGES</span><h2>Choose a page</h2>@for (option of pageOptions; track option.key) { <button type="button" class="page-choice" [class.active]="pageKey === option.key" (click)="changePage(option.key)"><i class="bi" [class.bi-house]="option.key === 'home'" [class.bi-book]="option.key === 'about'" [class.bi-envelope]="option.key === 'contact'"></i>{{ option.label }}<i class="bi bi-chevron-right ms-auto"></i></button> }</nav></div>
+        <div class="col-xl-9"><form class="admin-panel admin-form" (ngSubmit)="savePage()" #pageForm="ngForm">
+          <div class="panel-heading"><div><span class="eyebrow">LIVE WEBSITE COPY</span><h2>Edit {{ getCurrentPageLabel() }}</h2><p class="panel-helper">Changes appear on the public page after saving. Layout and styling remain unchanged.</p></div></div>
+          @for (field of pageFields; track field.key) { <label class="form-label" [for]="'page-' + field.key">{{ field.label }} *</label>@if (field.multiline) { <textarea class="form-control page-copy-input" [id]="'page-' + field.key" [name]="'page-' + field.key" [(ngModel)]="pageDraft[field.key]" required maxlength="1500"></textarea> } @else { <input class="form-control" [id]="'page-' + field.key" [name]="'page-' + field.key" [(ngModel)]="pageDraft[field.key]" required maxlength="2000"> } }
+          <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn btn-primary" type="submit" [disabled]="pageForm.invalid || isSaving"><i class="bi bi-check2 me-2"></i>{{ isSaving ? 'Saving…' : 'Save page content' }}</button><a class="btn btn-outline-secondary" [routerLink]="pageKey === 'home' ? '/' : '/' + pageKey" target="_blank">Preview page <i class="bi bi-box-arrow-up-right ms-2"></i></a></div>
+        </form></div>
+      </div>
+    }
+    <p class="privacy-reminder"><i class="bi bi-shield-check me-2"></i>Administrator access is checked by the API on every request. Draft content stays private, and member contact details remain hidden.</p>
+  </div>
+</section>

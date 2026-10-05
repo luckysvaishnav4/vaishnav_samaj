@@ -1,0 +1,14 @@
+<section class="updates-banner"><div class="container"><span class="eyebrow eyebrow-light">A note from your Samaj</span><h1>News & <em>announcements</em></h1><p>Keep up with important notices, upcoming programmes and opportunities from our community.</p></div></section>
+<section class="updates-section"><div class="container">
+  <div class="updates-layout row g-4">
+    <div class="col-lg-8"><div class="updates-heading"><span class="eyebrow">Community noticeboard</span><h2>Latest <em>updates</em></h2></div>
+      @if (isLoading) { <p role="status" class="notice-status"><span class="spinner-border spinner-border-sm me-2"></span>Loading published announcements…</p> }
+      @if (loadError) { <p role="alert" class="notice-status notice-error"><i class="bi bi-exclamation-circle me-2"></i>{{ loadError }}</p> }
+      @if (!isLoading && !loadError && !announcements.length) { <p class="notice-status">{{ demoMode ? 'No sample announcements are available.' : 'No published announcements yet.' }}</p> }
+      @if (!isLoading && !loadError) { <div class="announcement-list">@for (announcement of announcements; track announcement.title; let index = $index) {
+        <article class="announcement-item"><div class="announcement-date"><span class="numeric">{{ announcement.date.split(' ')[0] }}</span><small class="numeric">{{ announcement.date.split(' ').slice(1).join(' ') }}</small></div><div class="announcement-content"><span class="notice-category">{{ announcement.category }}</span><h3>{{ announcement.title }}</h3><p>{{ announcement.summary }}</p><button type="button" class="read-notice" data-bs-toggle="collapse" [attr.data-bs-target]="'#notice-' + index" aria-expanded="false" [attr.aria-controls]="'notice-' + index">Read notice <i class="bi bi-chevron-down ms-1"></i></button><div class="collapse" [id]="'notice-' + index"><p class="notice-detail">@if (demoMode) { This is sample content for the frontend preview. Please confirm details with your local Samaj. } @else { For further information about this published notice, please contact your local Samaj office. }</p></div></div></article>
+      }</div> }
+    </div>
+    <aside class="col-lg-4"><div class="notice-aside"><i class="bi bi-megaphone"></i><h2>Stay in the loop</h2><p>Important updates help us stay connected as one community. Check back here for Samaj news and shared opportunities.</p><a routerLink="/contact">Contact the Samaj office <i class="bi bi-arrow-right ms-1"></i></a></div><div class="notice-aside secondary"><i class="bi bi-calendar-event"></i><h2>Join us in person</h2><p>Find a gathering or community programme that brings everyone together.</p><a routerLink="/events">Explore upcoming events <i class="bi bi-arrow-right ms-1"></i></a></div></aside>
+  </div>
+</div></section>

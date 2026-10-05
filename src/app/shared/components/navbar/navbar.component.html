@@ -1,0 +1,40 @@
+<div class="utility-bar d-none d-lg-block">
+  <div class="container d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-flower1 me-2"></i>A home for our community, wherever life takes us</span>
+    <span><i class="bi bi-geo-alt me-1"></i>Ahmedabad, Gujarat <span class="mx-2">·</span> <a routerLink="/contact">Connect with us</a></span>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top site-navbar">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/" aria-label="Vaishnav Samaj home">
+      <span class="brand-mark"><i class="bi bi-flower3"></i></span>
+      <span class="brand-name">Vaishnav <span>Samaj</span><small>TOGETHER IN TRADITION</small></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mx-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/about" routerLinkActive="active">Our Samaj</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/gotras" routerLinkActive="active">Gotras</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/members" routerLinkActive="active">Members</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/events" routerLinkActive="active">Events</a></li>
+        <li class="nav-item dropdown">
+          <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">More</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/announcements">Announcements</a></li>
+            <li><a class="dropdown-item" routerLink="/my-profile">My profile & privacy</a></li>
+            <li><a class="dropdown-item" routerLink="/member-login">Member sign in</a></li>
+            <li><a class="dropdown-item" routerLink="/gallery">Gallery</a></li>
+            <li><a class="dropdown-item" routerLink="/contact">Contact</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center gap-3 nav-actions">
+        <a class="match-link" routerLink="/matches"><i class="bi bi-heart me-1"></i> Matches</a>
+        <a class="btn btn-primary btn-sm px-3 profile-cta" routerLink="/register">Create profile <i class="bi bi-arrow-up-right ms-1"></i></a>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,28 @@
+.page-banner { background: linear-gradient(105deg,rgba(54,25,27,.96),rgba(88,43,34,.86)),url("https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1900&q=80") center 55%/cover; padding: 5.4rem 0; color: #fff; }
+.page-banner h1 { font: 600 clamp(2.8rem,6vw,4.4rem)/1.08 var(--serif); margin: 1rem 0; }
+.page-banner h1 em { color: #fff0c2; text-shadow: 0 1px 10px rgba(31,17,15,.35); }
+.page-banner p { max-width: 580px; color: rgba(255,255,255,.74); line-height: 1.8; }
+.section-pad { padding: 5rem 0; }
+.bg-cream { background: var(--light-bg); }
+.page-title { font: 600 clamp(2rem,3.5vw,3rem)/1.14 var(--serif); color: var(--text-color); margin: .7rem 0 1rem; }
+.page-title em { color: var(--primary-color); }
+.body-copy { color: #776d67; font-size: .91rem; line-height: 1.85; }
+.value-note { display: flex; align-items: center; gap: .8rem; border-left: 2px solid var(--accent-color); background: #faf5ee; padding: 1rem 1.2rem; color: #63453a; font: italic 1rem/1.6 var(--serif); margin-top: 1.5rem; }
+.value-note i { color: #be965c; font-size: 1.45rem; }
+.about-image { height: 430px; position: relative; border-radius: 3px; overflow: hidden; background: #eee2d3; }
+.about-image img { width: 100%; height: 100%; object-fit: cover; }
+.about-image span { position: absolute; bottom: 1.2rem; left: 1.2rem; padding: .65rem 1rem; background: rgba(255,255,255,.93); color: var(--primary-color); font-size: .75rem; font-weight: 700; }
+.section-heading { max-width: 620px; margin: 0 auto 2.5rem; }
+.section-heading h2 { font: 600 2.7rem var(--serif); margin: .55rem; }
+.section-heading h2 em { color: var(--primary-color); }
+.section-heading p { color: #80756f; font-size: .86rem; }
+.value-card { height: 100%; padding: 1.5rem; background: #fff; border: 1px solid #ece3da; }
+.value-card > i { color: var(--primary-color); font-size: 1.5rem; }
+.value-card h3 { font: 700 1.2rem var(--serif); margin: 1rem 0 .5rem; }
+.value-card p { color: #80756f; font-size: .82rem; line-height: 1.65; margin: 0; }
+.objective-list > div { display: flex; gap: 1.2rem; padding: 1.1rem 0; border-bottom: 1px solid #eee7e0; }
+.objective-list > div:first-child { padding-top: 0; }
+.objective-list > div > span { color: #b68b58; font: 600 1.1rem var(--serif); }
+.objective-list h3 { font: 700 1.08rem var(--serif); margin: 0 0 .35rem; }
+.objective-list p { color: #81766f; font-size: .81rem; margin: 0; }
+@media(max-width:767.98px) { .page-banner { padding: 4rem 0; } .section-pad { padding: 3.7rem 0; } .about-image { height: 320px; } }

@@ -1,0 +1,59 @@
+<section class="home-hero">
+  <div class="hero-shade"></div>
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <span class="hero-kicker"><i class="bi bi-flower1 me-2"></i>{{ pageContent.kicker }}</span>
+      <h1>{{ pageContent.titleLine1 }}<br><em>{{ pageContent.titleLine2 }}</em></h1>
+      <p>{{ pageContent.description }}</p>
+      <div class="d-flex flex-wrap gap-3 mt-4">
+        <a class="btn btn-gold btn-lg" routerLink="/matches">Find your match <i class="bi bi-arrow-up-right ms-2"></i></a>
+        <a class="btn btn-outline-light btn-lg" routerLink="/about">Explore our Samaj</a>
+      </div>
+      <div class="hero-trust"><span><i class="bi bi-shield-check me-2"></i>Privacy-conscious by design</span><span><i class="bi bi-people me-2"></i>Built around community</span></div>
+    </div>
+  </div>
+  <div class="hero-stamp"><span>॥ श्री कृष्ण शरणं ममः ॥</span><i class="bi bi-flower3"></i></div>
+</section>
+<section class="stats-strip">
+  <div class="container"><div class="row g-0">
+    <div class="col-6 col-lg-3 stat-item"><strong><span class="stat-number numeric">{{ data.gotras.length }}</span><span class="stat-label">Gotras in our sample directory</span></strong></div>
+    <div class="col-6 col-lg-3 stat-item"><strong><span class="stat-number numeric">{{ data.profiles.length }}</span><span class="stat-label">Illustrative demo profiles</span></strong></div>
+    <div class="col-6 col-lg-3 stat-item"><strong><span class="stat-number numeric">{{ data.events.length }}</span><span class="stat-label">Sample community events</span></strong></div>
+    <div class="col-6 col-lg-3 stat-item"><strong><span class="stat-number stat-word">One</span><span class="stat-label">Samaj, many stories, one home</span></strong></div>
+  </div></div>
+</section>
+<section class="section-pad bg-cream">
+  <div class="container">
+    <div class="section-heading text-center"><span class="eyebrow">A community that feels like family</span><h2>Many families. <em>One Samaj.</em></h2><p>Our roots are deep, our doors are open. Discover the people and traditions that make our community special.</p></div>
+    <div class="row g-4 mt-2">
+      <div class="col-md-4"><article class="highlight-card"><span class="highlight-icon"><i class="bi bi-book-half"></i></span><h3>Our shared heritage</h3><p>Discover the stories, values and traditions passed down through generations of Vaishnav families.</p><a routerLink="/about">Get to know us <i class="bi bi-arrow-right ms-1"></i></a></article></div>
+      <div class="col-md-4"><article class="highlight-card"><span class="highlight-icon"><i class="bi bi-people"></i></span><h3>Find your community</h3><p>Reconnect with your roots, meet fellow members and explore our welcoming community directory.</p><a routerLink="/members">Meet our members <i class="bi bi-arrow-right ms-1"></i></a></article></div>
+      <div class="col-md-4"><article class="highlight-card"><span class="highlight-icon"><i class="bi bi-heart"></i></span><h3>Meaningful connections</h3><p>Take a thoughtful first step towards a life partner who shares your values and cultural roots.</p><a routerLink="/matches">Explore matches <i class="bi bi-arrow-right ms-1"></i></a></article></div>
+    </div>
+  </div>
+</section>
+<section class="section-pad">
+  <div class="container">
+    <div class="section-topline"><div><span class="eyebrow">A legacy in every lineage</span><h2>Explore our <em>Gotras</em></h2><p>Every lineage carries a story. Explore the traditions that connect our families.</p></div><a class="text-link" routerLink="/gotras">View all gotras <i class="bi bi-arrow-right ms-1"></i></a></div>
+    <div class="row g-3">@for (gotra of gotras.slice(0, 3); track gotra.name) { <div class="col-md-4"><app-gotra-card [gotra]="gotra" /></div> }</div>
+  </div>
+</section>
+<section class="section-pad bg-cream">
+  <div class="container">
+    <div class="section-topline"><div><span class="eyebrow">Thoughtful introductions</span><h2>Meet our <em>community</em></h2><p>Realistic demo profiles to show how respectful introductions could feel.</p></div><a class="text-link" routerLink="/matches">Explore matches <i class="bi bi-arrow-right ms-1"></i></a></div>
+    <div class="row g-4">@for (profile of data.profiles.slice(0, 3); track profile.id) { <div class="col-md-6 col-lg-4"><app-profile-card [profile]="profile" /></div> }</div>
+    <p class="demo-caption"><i class="bi bi-info-circle me-1"></i>Sample profiles for preview only. No real user profiles or requests are stored.</p>
+  </div>
+</section>
+<section class="section-pad">
+  <div class="container">
+    <div class="section-topline"><div><span class="eyebrow">Come together</span><h2>Moments that bring us <em>closer</em></h2><p>From festival celebrations to community initiatives, there is always a reason to meet.</p></div><a class="text-link" routerLink="/events">See all events <i class="bi bi-arrow-right ms-1"></i></a></div>
+    <div class="row g-4">@for (event of events.slice(0, 3); track event.title) { <div class="col-md-6 col-lg-4"><app-event-card [event]="event" /></div> }</div>
+  </div>
+</section>
+<section class="announcement-band">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+    @if (announcements.length) { <div><span class="eyebrow">From the Samaj</span><h2>{{ announcements[0].title }}</h2><p class="mb-0">{{ announcements[0].summary }}</p></div>
+    <a class="btn btn-outline-primary flex-shrink-0" routerLink="/announcements">All announcements <i class="bi bi-arrow-right ms-2"></i></a> }
+  </div>
+</section>

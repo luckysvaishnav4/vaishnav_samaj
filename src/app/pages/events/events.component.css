@@ -1,0 +1,24 @@
+.events-banner { color: white; background: linear-gradient(105deg,rgba(54,25,27,.95),rgba(92,46,35,.8)),url("https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1900&q=85") center 45%/cover; padding: 4.6rem 0; }
+.events-banner h1 { font: 600 clamp(2.7rem,5.8vw,4.2rem)/1.1 var(--serif); margin: .65rem 0; }
+.events-banner h1 em { color: #fff0c2; text-shadow: 0 1px 10px rgba(31,17,15,.35); }
+.events-banner p { color: rgba(255,255,255,.76); max-width: 590px; line-height: 1.8; }
+.events-section { padding: 4rem 0 5rem; }
+.events-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 1.8rem; gap: 1rem; }
+.events-heading h2 { font: 600 2.5rem var(--serif); margin: .45rem 0 0; }
+.events-heading h2 em { color: var(--primary-color); }
+.events-note { color: #6e625b; font-size: .88rem; }
+.event-calendar-note { display: flex; align-items: flex-start; gap: .8rem; padding: 1rem 1.2rem; margin-top: 1.5rem; background: #f8f3e9; color: #7d6751; }
+.event-calendar-note > i { font-size: 1.2rem; }
+.event-calendar-note strong { font: 700 .87rem var(--serif); }
+.event-calendar-note p { font-size: .9rem; line-height: 1.6; margin: .2rem 0 0; }
+.event-status { color: #766b62; background: #faf6f0; padding: .9rem 1rem; font-size: .78rem; }
+.event-error { color: #842a2a; background: #fff0ef; }
+.event-empty { display: flex; align-items: center; gap: .8rem; border: 1px solid #eee6df; padding: 1.2rem; color: #786d65; }
+.event-empty i { color: #a78052; font-size: 1.25rem; }
+.event-empty p { margin: 0; font-size: .8rem; }
+.event-values { border-top: 1px solid #eee7e0; padding-top: 2rem; }
+.event-values > div { padding: 1rem; }
+.event-values i { color: #a78052; font-size: 1.3rem; }
+.event-values h3 { font: 700 1.12rem var(--serif); margin: .75rem 0 .35rem; }
+.event-values p { color: #81766f; font-size: .78rem; line-height: 1.65; margin: 0; }
+@media(max-width:767.98px) { .events-section { padding: 3rem 0 4rem; } .events-heading { align-items: flex-start; flex-direction: column; } .events-heading h2 { font-size: 2.15rem; } }

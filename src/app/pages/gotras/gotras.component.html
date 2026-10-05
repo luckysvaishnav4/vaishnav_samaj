@@ -1,0 +1,20 @@
+<section class="directory-banner"><div class="container"><span class="eyebrow eyebrow-light">Our lineage, our legacy</span><h1>वैष्णव <em>गोत्र सूची</em></h1><p>समाज द्वारा साझा की गई परंपरा-वार गोत्र सूची। अपनी पारिवारिक परंपरा की पुष्टि परिवार के बड़ों से करें।</p><div class="banner-stat"><i class="bi bi-flower1 me-2"></i><span class="numeric">{{ gotras.length }} / 52</span> गोत्र नाम प्राप्त हुए</div></div></section>
+<section class="directory-section"><div class="container">
+  <div class="directory-intro"><div><span class="eyebrow">Gotra directory</span><h2>अपनी <em>परंपरा</em> खोजें</h2></div><p>आपके द्वारा साझा की गई पूरी 52-गोत्र सूची जोड़ दी गई है। जिन सात नामों के सम्प्रदाय की जानकारी नहीं मिली, उन्हें अलग से “सम्प्रदाय की पुष्टि बाकी” के रूप में दिखाया गया है।</p></div>
+  <button class="filter-toggle d-md-none" type="button" [attr.aria-expanded]="filtersOpen" aria-controls="gotraFilters" (click)="filtersOpen = !filtersOpen">
+    <span><i class="bi bi-funnel me-2"></i>खोज और फ़िल्टर</span>
+    <i class="bi" [class.bi-chevron-down]="!filtersOpen" [class.bi-chevron-up]="filtersOpen"></i>
+  </button>
+  <div class="filter-panel row g-3 align-items-center" id="gotraFilters" [class.filters-open]="filtersOpen">
+    <div class="col-lg-5"><label class="visually-hidden" for="gotraSearch">गोत्र खोजें</label><div class="search-field"><i class="bi bi-search"></i><input id="gotraSearch" class="form-control" type="search" [(ngModel)]="searchTerm" placeholder="गोत्र या सम्प्रदाय खोजें"></div></div>
+    <div class="col-lg-7"><div class="alphabet-filter"><span>पहले अक्षर से</span><button type="button" class="letter-btn" [class.selected]="selectedLetter === 'All'" (click)="selectedLetter = 'All'">सभी</button>@for (letter of letters.slice(1); track letter) { <button type="button" class="letter-btn" [class.selected]="selectedLetter === letter" (click)="selectedLetter = letter">{{ letter }}</button> }</div></div>
+  </div>
+  @if (loadError) { <div class="alert alert-danger" role="alert">{{ loadError }}</div> }
+  @if (isLoading) { <p class="result-count" role="status">समाज की गोत्र सूची लोड हो रही है...</p> }
+  @if (!isLoading) { <p class="result-count"><span class="numeric">{{ filteredGotras.length }} / {{ gotras.length }}</span> प्राप्त गोत्र</p>
+  @if (filteredGotras.length) {
+    <div class="row g-3">@for (gotra of filteredGotras; track gotra.name) { <div class="col-md-6 col-lg-4"><app-gotra-card [gotra]="gotra" /></div> }</div>
+  } @else { <div class="empty-state"><i class="bi bi-search"></i><h3>No gotras found</h3><p>Try another search or choose a different letter.</p></div> }
+  }
+  @if (demoMode) { <div class="info-banner mt-5"><i class="bi bi-info-circle"></i><p class="mb-0"><strong>डेमो जानकारी:</strong> कार्ड पर दिखाए गए sample profile counts काल्पनिक प्रोफाइलों की संख्या हैं; ये पंजीकृत समाज-सदस्यों की गिनती नहीं हैं।</p></div> }
+</div></section>

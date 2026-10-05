@@ -1,0 +1,27 @@
+.account-page { min-height: 70vh; background: #faf8f5; }
+.account-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.75rem; }
+.account-heading h1 { margin: .35rem 0; font: 600 clamp(2rem,4vw,3rem) var(--serif); }
+.account-heading h1 em { color: var(--primary-color); }
+.account-heading p { color: #6e625b; margin: 0; }
+.account-card { height: 100%; background: #fff; border: 1px solid #ece4dc; padding: clamp(1.1rem,2.5vw,1.6rem); }
+.account-card h2 { margin: .35rem 0 .8rem; font: 700 1.55rem var(--serif); }
+.account-card > p { color: #6e625b; line-height: 1.6; }
+.account-facts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin: 1.2rem 0; }
+.account-facts div { display: flex; flex-direction: column; gap: .2rem; }
+.account-facts span { color: #766b63; font-size: .86rem; }
+.account-facts strong { color: #403731; overflow-wrap: anywhere; }
+.private-account-note { padding: .85rem; color: #456554 !important; background: #f2f7f1; font-size: .88rem; }
+.account-card .form-label { color: #514740; font-size: .9rem; font-weight: 600; }
+.account-card .form-select { min-height: 44px; }
+.account-card .form-control { min-height: 44px; }
+.photo-help { display: block; margin-top: .35rem; color: #6e625b; font-size: .84rem; }
+.share-consent { display: flex; align-items: flex-start; gap: .65rem; margin-top: 1rem; color: #554a42; font-size: .88rem; line-height: 1.5; }
+.share-consent input { flex: 0 0 auto; margin-top: .25rem; accent-color: var(--primary-color); }
+.interest-inbox { height: auto; }
+.request-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid #f0e9e3; padding: 1rem 0; }
+.request-row strong { color: #443a34; }
+.request-row p { color: #6e625b; font-size: .9rem; margin: .3rem 0; }
+.request-status { display: inline-block; padding: .18rem .55rem; border-radius: 2rem; color: #456554; background: #f2f7f1; font-size: .8rem; font-weight: 600; text-transform: capitalize; }
+.request-pending { color: #795a31; background: #f9f2e6; }
+.privacy-reminder { margin-top: 1rem; padding: .85rem; color: #456554; background: #f2f7f1; font-size: .88rem; }
+@media(max-width:575.98px) { .account-heading { flex-direction: column; } .account-facts { grid-template-columns: 1fr; } }

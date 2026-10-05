@@ -1,0 +1,4 @@
+<article class="event-card h-100">
+  <div class="event-image">@if (event.image) { <img [src]="event.image" [alt]="event.title" loading="lazy"> } @else { <div class="event-image-placeholder"><i class="bi bi-calendar-event"></i></div> }<span>{{ event.category }}</span></div>
+  <div class="event-body"><p class="event-date numeric"><i class="bi bi-calendar3 me-2"></i>{{ event.date }}</p><h3>{{ event.title }}</h3><p class="event-description">{{ event.description }}</p><p class="event-venue"><i class="bi bi-geo-alt me-2"></i>{{ event.venue }}</p></div>
+</article>

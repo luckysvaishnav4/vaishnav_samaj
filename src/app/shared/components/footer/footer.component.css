@@ -1,0 +1,22 @@
+.site-footer { color: #fff; }
+.footer-cta { position: relative; overflow: hidden; background: var(--primary-color); padding: 4.6rem 0; }
+.footer-cta::after { content: ""; position: absolute; right: -5rem; top: -9rem; width: 27rem; height: 27rem; border: 1px solid rgba(255,255,255,.11); border-radius: 50%; box-shadow: 0 0 0 2.2rem rgba(255,255,255,.035),0 0 0 4.4rem rgba(255,255,255,.025); pointer-events: none; }
+.footer-cta .container { position: relative; z-index: 1; }
+.footer-cta h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(2rem,4vw,3.2rem); line-height: 1.12; margin: .8rem 0; }
+.footer-cta p { color: rgba(255,255,255,.72); margin: 0; }
+.footer-cta .btn-gold { border-radius: 3px; padding: .9rem 1.3rem; }
+.footer-main { background: #251b1b; padding: 3.8rem 0 1.4rem; }
+.footer-brand { color: #fff; display: inline-flex; align-items: center; gap: .8rem; text-decoration: none; font-family: var(--serif); font-weight: 700; font-size: 1.12rem; }
+.footer-brand .brand-mark { background: rgba(255,255,255,.1); color: var(--accent-color); }
+.footer-brand small { display: block; font: 600 .5rem var(--sans); letter-spacing: .18em; color: #d4b781; margin-top: .24rem; }
+.footer-copy { color: rgba(255,255,255,.58); font-size: .87rem; line-height: 1.8; max-width: 330px; margin: 1.1rem 0; }
+.footer-main h3 { font: 700 .8rem var(--sans); text-transform: uppercase; letter-spacing: .12em; color: #f1d59e; margin-bottom: 1.1rem; }
+.footer-main .col-lg-2 > a { display: block; color: rgba(255,255,255,.7); text-decoration: none; font-size: .84rem; margin: .62rem 0; }
+.footer-main .col-lg-2 > a:hover, .footer-contact:hover { color: #fff; }
+.social-links { display: flex; gap: .55rem; }
+.social-links span { width: 35px; height: 35px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.17); border-radius: 50%; color: #f1d59e; }
+.footer-contact { color: #f1d59e; text-decoration: none; font-size: .9rem; font-weight: 600; }
+.privacy-note { color: rgba(255,255,255,.48); font-size: .77rem; margin-top: 1.35rem; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.11); margin-top: 3rem; padding-top: 1.15rem; color: rgba(255,255,255,.43); font-size: .74rem; }
+.footer-bottom .bi-heart-fill { color: #cf8b6b; font-size: .68rem; }
+@media(max-width: 767.98px) { .footer-cta { padding: 3.25rem 0; } .footer-cta .btn { margin-top: .5rem; } .footer-main { padding-top: 3rem; } }

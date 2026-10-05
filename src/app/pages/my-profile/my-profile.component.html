@@ -1,0 +1,46 @@
+<section class="account-page">
+  <div class="container py-4 py-lg-5">
+    <header class="account-heading"><div><span class="eyebrow">Your account</span><h1>My <em>profile</em></h1><p>Review what you have shared and control who can view your profile.</p></div><button class="btn btn-outline-secondary" type="button" (click)="signOut()" [disabled]="!isSignedIn"><i class="bi bi-box-arrow-right me-2"></i>Sign out</button></header>
+    @if (error) { <div class="alert alert-danger" role="alert">{{ error }}</div> }
+    @if (notice) { <div class="alert alert-success" role="status">{{ notice }}</div> }
+    @if (isLoading) { <p role="status"><span class="spinner-border spinner-border-sm me-2"></span>Loading your profile…</p> }
+    @else if (!api.isConfigured) {
+      <section class="account-card"><h2>Member accounts are not connected</h2><p>This local preview is using sample profiles; profile details are not being sent or stored.</p></section>
+    } @else if (!isSignedIn) {
+      <section class="account-card"><h2>Sign in to manage your profile</h2><p>Your profile starts private. Sign in to change its visibility or upload a photo.</p><a class="btn btn-primary" routerLink="/member-login">Member sign in</a></section>
+    } @else if (!profile) {
+      <section class="account-card"><h2>Profile not found</h2><p>This account does not yet have a community profile. Create one to continue.</p><a class="btn btn-primary" routerLink="/register">Create profile</a></section>
+    } @else {
+      <div class="row g-4">
+        <div class="col-lg-7"><section class="account-card">
+          <span class="eyebrow">Profile overview</span><h2>{{ profile.display_name }}</h2>
+          <div class="account-facts"><div><span>Gotra</span><strong>{{ profile.gotra }}</strong></div><div><span>City</span><strong>{{ profile.city }}</strong></div><div><span>Education</span><strong>{{ profile.education || 'Not shared' }}</strong></div><div><span>Profession</span><strong>{{ profile.profession || 'Not shared' }}</strong></div></div>
+          <label class="form-label" for="account-photo">Profile photo (optional)</label><input class="form-control" id="account-photo" type="file" accept="image/jpeg,image/png,image/webp" (change)="choosePhoto($event)"><small class="photo-help">{{ photoName || 'JPEG, PNG, or WebP; maximum 5 MB. Stored privately on the API server.' }}</small><button class="btn btn-outline-primary mt-2" type="button" (click)="uploadPhoto()" [disabled]="!photoFile || isSaving">@if (isSaving) { <span class="spinner-border spinner-border-sm me-2"></span> }Upload photo</button>
+          <p class="private-account-note"><i class="bi bi-lock-fill me-2"></i>Your email address and phone number are stored separately and are never included in public member listings.</p>
+        </section></div>
+        <div class="col-lg-5"><section class="account-card">
+          <span class="eyebrow">Privacy controls</span><h2>Profile visibility</h2>
+          <label class="form-label" for="profile-visibility">Who can view your profile?</label>
+          <select class="form-select" id="profile-visibility" name="visibility" [(ngModel)]="visibility">
+            <option value="private">Private — only you</option><option value="community">Vaishnav members who sign in</option>
+          </select>
+          @if (visibility === 'community') { <label class="share-consent"><input type="checkbox" [(ngModel)]="shareConsent" name="shareConsent"><span>I understand my name, age, city, gotra, education, profession, introduction and family information will be visible to signed-in members. My email and phone stay private.</span></label> }
+          <button class="btn btn-primary mt-3" type="button" (click)="saveVisibility()" [disabled]="isSaving || (visibility === profile.visibility && !shareConsent)">@if (isSaving) { <span class="spinner-border spinner-border-sm me-2"></span> }Save privacy setting</button>
+        </section></div>
+      </div>
+      <section class="account-card interest-inbox mt-4">
+        <span class="eyebrow">Private introductions</span><h2>Interest requests</h2>
+        @if (!interestRequests.length) { <p>You do not have any interest requests yet.</p> }
+        @for (request of interestRequests; track request.id) {
+          <article class="request-row">
+            <div><strong>{{ request.recipient_id === profile.id ? 'Received request' : 'Request sent' }}</strong><p>{{ request.created_at | date:'mediumDate' }} · {{ request.recipient_id === profile.id ? 'A member would like to connect with you.' : 'Your request is private.' }}</p><span class="request-status" [class.request-pending]="request.status === 'pending'">{{ request.status | titlecase }}</span></div>
+            @if (request.recipient_id === profile.id && request.status === 'pending') {
+              <div class="d-flex gap-2"><button class="btn btn-sm btn-outline-primary" type="button" (click)="respondToRequest(request.id, 'accepted')">Accept</button><button class="btn btn-sm btn-outline-secondary" type="button" (click)="respondToRequest(request.id, 'declined')">Decline</button></div>
+            }
+          </article>
+        }
+        <p class="privacy-reminder mb-0"><i class="bi bi-shield-lock me-2"></i>Requests do not reveal either member's phone number or email address.</p>
+      </section>
+    }
+  </div>
+</section>

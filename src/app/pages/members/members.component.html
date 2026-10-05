@@ -1,0 +1,31 @@
+<section class="directory-banner"><div class="container"><span class="eyebrow eyebrow-light">The people who make us</span><h1>Our <em>community</em></h1><p>Meet the families and individuals who bring the Vaishnav Samaj to life.</p><div class="banner-stat"><i class="bi bi-info-circle me-2"></i>@if (demoMode) { Sample preview profiles only — not a live register. } @else { Community-shared profiles are visible to signed-in members only. }</div></div></section>
+<section class="directory-section"><div class="container">
+  @if (isLoading) { <p class="directory-message" role="status"><span class="spinner-border spinner-border-sm me-2"></span>Loading community profiles…</p> }
+  @if (signInRequired) { <div class="directory-message"><h2>Sign in to view member profiles</h2><p>Real community profiles are available only to signed-in members. Your contact details remain private.</p><a class="btn btn-primary" routerLink="/member-login" [queryParams]="{ returnTo: '/members' }">Member sign in</a><a class="btn btn-outline-primary ms-2" routerLink="/register">Create a profile</a></div> }
+  @if (loadError) { <p class="directory-message directory-error" role="alert">{{ loadError }}</p> }
+  @if (!isLoading && !signInRequired && !loadError) {
+  <div class="row g-4">
+    <aside class="col-lg-3">
+      <button class="filter-toggle d-lg-none" type="button" [attr.aria-expanded]="filtersOpen" aria-controls="memberFilters" (click)="filtersOpen = !filtersOpen">
+        <span><i class="bi bi-sliders2 me-2"></i>Filters <span class="filter-count numeric">{{ (gotra ? 1 : 0) + (city ? 1 : 0) + (gender ? 1 : 0) + (minAge || maxAge ? 1 : 0) }}</span></span>
+        <i class="bi" [class.bi-chevron-down]="!filtersOpen" [class.bi-chevron-up]="filtersOpen"></i>
+      </button>
+      <div class="filter-sidebar" id="memberFilters" [class.filters-open]="filtersOpen">
+        <div class="filter-title"><h2>Refine your search</h2><button type="button" (click)="clearFilters()">Clear all</button></div>
+        <label class="form-label" for="memberSearch">Search</label><div class="search-field mb-3"><i class="bi bi-search"></i><input id="memberSearch" class="form-control" type="search" [(ngModel)]="searchTerm" placeholder="Name, city or work"></div>
+        <label class="form-label" for="filterGotra">Gotra</label><select id="filterGotra" class="form-select mb-3" [(ngModel)]="gotra"><option value="">All gotras</option>@for (item of data.gotras; track item.name) { <option [value]="item.name">{{ item.name }}</option> }</select>
+        <label class="form-label" for="filterCity">City</label><select id="filterCity" class="form-select mb-3" [(ngModel)]="city"><option value="">All cities</option>@for (item of cities; track item) { <option [value]="item">{{ item }}</option> }</select>
+        <label class="form-label" for="filterGender">Gender</label><select id="filterGender" class="form-select mb-3" [(ngModel)]="gender"><option value="">All</option><option>Man</option><option>Woman</option><option>Prefer not to say</option></select>
+        <span class="form-label d-block">Age range</span><div class="row g-2"><div class="col-6"><label class="visually-hidden" for="minAge">Minimum age</label><input id="minAge" class="form-control" type="number" min="18" max="100" [(ngModel)]="minAge" placeholder="From"></div><div class="col-6"><label class="visually-hidden" for="maxAge">Maximum age</label><input id="maxAge" class="form-control" type="number" min="18" max="100" [(ngModel)]="maxAge" placeholder="To"></div></div>
+        <p class="privacy-hint"><i class="bi bi-shield-lock me-2"></i>Contact details are never shown in public listings.</p>
+      </div>
+    </aside>
+    <div class="col-lg-9">
+      <div class="results-heading"><div><span class="eyebrow">Member directory</span><h2><span class="numeric">{{ filteredProfiles.length }}</span> <em>members</em></h2></div><span>{{ demoMode ? 'Illustrative sample listings' : 'Shared by signed-in members' }}</span></div>
+      @if (filteredProfiles.length) {
+        <div class="row g-3">@for (profile of filteredProfiles; track profile.id) { <div class="col-md-6 col-xl-4"><app-profile-card [profile]="profile" /></div> }</div>
+      } @else { <div class="empty-state"><i class="bi bi-people"></i><h3>No members match those filters</h3><p>Try widening your search or clear all filters.</p><button class="btn btn-outline-primary btn-sm mt-3" type="button" (click)="clearFilters()">Clear filters</button></div> }
+    </div>
+  </div>
+  }
+</div></section>

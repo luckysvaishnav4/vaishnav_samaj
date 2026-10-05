@@ -1,0 +1,11 @@
+<section class="events-banner"><div class="container"><span class="eyebrow eyebrow-light">Gather, celebrate, belong</span><h1>Make room for <em>togetherness.</em></h1><p>From cultural celebrations to community initiatives, every gathering is a chance to reconnect.</p></div></section>
+<section class="events-section"><div class="container">
+  <div class="events-heading"><div><span class="eyebrow">Save the date</span><h2>Upcoming <em>gatherings</em></h2></div><span class="events-note"><i class="bi bi-calendar-heart me-2"></i>Community moments to look forward to</span></div>
+  @if (configurationWarning) { <p class="event-status event-error" role="alert"><i class="bi bi-exclamation-circle me-2"></i>The community API is not connected: {{ configurationWarning }} Showing sample events instead.</p> }
+  @if (isLoading) { <p class="event-status" role="status"><span class="spinner-border spinner-border-sm me-2"></span>Loading published community events…</p> }
+  @if (loadError) { <p class="event-status event-error" role="alert"><i class="bi bi-exclamation-circle me-2"></i>{{ loadError }}</p> }
+  @if (!isLoading && !loadError && events.length) { <div class="row g-4">@for (event of events; track event.title) { <div class="col-md-6 col-lg-4"><app-event-card [event]="event" /></div> }</div> }
+  @if (!isLoading && !loadError && !events.length) { <div class="event-empty"><i class="bi bi-calendar2-x"></i><p>No upcoming published events yet.</p></div> }
+  <div class="event-calendar-note"><i class="bi bi-info-circle"></i><div><strong>Planning to attend?</strong><p>@if (demoMode) { These are illustrative event listings for the website preview. } @else { Event details come from the community database. } Please confirm timings and registration details with your local Samaj office.</p></div></div>
+  <div class="event-values row g-3 mt-4"><div class="col-md-4"><i class="bi bi-music-note-beamed"></i><h3>Culture & celebration</h3><p>Keep traditions vibrant with music, dance, festivals and shared stories.</p></div><div class="col-md-4"><i class="bi bi-people"></i><h3>Community & connection</h3><p>Make new memories and strengthen the bonds that bring families together.</p></div><div class="col-md-4"><i class="bi bi-hands"></i><h3>Service & wellbeing</h3><p>Find meaningful ways to support neighbours and contribute together.</p></div></div>
+</div></section>

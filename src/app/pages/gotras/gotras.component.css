@@ -1,0 +1,37 @@
+.directory-banner { color: white; background: linear-gradient(110deg,rgba(54,25,27,.97),rgba(92,46,35,.83)),url("https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1900&q=80") center 48%/cover; padding: 4.5rem 0; }
+.directory-banner h1 { font: 600 clamp(2.8rem,5vw,4rem) var(--serif); margin: .6rem 0; }
+.directory-banner h1 { font-family: "Noto Sans Devanagari", var(--serif); }
+.directory-banner h1 em { color: #fff0c2; text-shadow: 0 1px 10px rgba(31,17,15,.35); }
+.directory-banner p { color: rgba(255,255,255,.75); max-width: 610px; line-height: 1.75; }
+.banner-stat { color: #f4e5c2; font-size: .9rem; margin-top: 1.25rem; }
+.directory-section { padding: 3.7rem 0 5rem; }
+.directory-intro { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 1.5rem; }
+.directory-intro h2 { font: 600 2.4rem var(--serif); margin: .4rem 0 0; }
+.directory-intro h2 { font-family: "Noto Sans Devanagari", var(--serif); }
+.directory-intro h2 em { color: var(--primary-color); }
+.directory-intro > p { color: #81766f; max-width: 430px; font-size: .8rem; margin: 0; }
+.filter-panel { background: #faf7f3; padding: 1rem; border: 1px solid #eee7e0; margin: 0; }
+.filter-toggle { display: none; }
+.search-field { display: flex; align-items: center; position: relative; }
+.search-field > i { color: #a17b53; position: absolute; left: .9rem; z-index: 1; }
+.search-field input { padding-left: 2.45rem; border-color: #e6dcd2; font-size: .83rem; min-height: 43px; }
+.search-field input:focus { border-color: #b88b66; box-shadow: 0 0 0 .15rem rgba(184,139,102,.15); }
+.alphabet-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; }
+.alphabet-filter > span { color: #81766f; font: 500 .7rem "Noto Sans Devanagari", var(--sans); margin-right: .3rem; }
+.letter-btn { border: 1px solid transparent; background: transparent; color: #5f554e; font: 500 .86rem "Noto Sans Devanagari", var(--sans); min-width: 34px; padding: .35rem .4rem; }
+.letter-btn.selected, .letter-btn:hover { background: var(--primary-color); color: white; border-radius: 2px; }
+.result-count { color: #6e625b; font-size: .88rem; margin: 1.4rem 0 .9rem; }
+.empty-state { text-align: center; padding: 3rem 1rem; border: 1px dashed #dfd2c5; color: #81766f; }
+.empty-state i { color: #b78c5c; font-size: 1.8rem; }
+.empty-state h3 { font: 700 1.3rem var(--serif); color: var(--text-color); margin-top: .8rem; }
+.empty-state p { font-size: .82rem; margin: 0; }
+.info-banner { display: flex; gap: .8rem; background: #f8f3e9; padding: 1rem 1.2rem; color: #7d6751; font-size: .77rem; }
+.info-banner i { color: #ad8050; font-size: 1.1rem; }
+@media(max-width:767.98px) {
+  .directory-intro { align-items: flex-start; flex-direction: column; gap: .7rem; }
+  .directory-section { padding: 2.8rem 0 4rem; }
+  .filter-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: .78rem .95rem; background: #fff; color: var(--primary-color); border: 1px solid #e6dcd2; border-radius: 3px; font: 600 .8rem "Noto Sans Devanagari",var(--sans); }
+  .filter-panel { display: none; margin-top: .5rem; }
+  .filter-panel.filters-open { display: flex; }
+  .alphabet-filter { margin-top: .2rem; }
+}

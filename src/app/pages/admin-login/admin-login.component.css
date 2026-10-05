@@ -1,0 +1,11 @@
+.admin-login-page { min-height: 70vh; display: grid; place-items: center; padding: 3rem 1rem; background: var(--light-bg); }
+.admin-login-card { width: min(100%, 460px); background: #fff; border: 1px solid #ece4dc; padding: clamp(1.5rem,5vw,2.6rem); box-shadow: 0 16px 45px rgba(48,31,23,.08); }
+.admin-brand { display: flex; align-items: center; gap: .75rem; margin-bottom: 2.4rem; color: var(--primary-color); text-decoration: none; font: 700 1.2rem var(--serif); }
+.admin-brand > i { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: var(--accent-color); background: var(--primary-color); font-size: 1.4rem; }
+.admin-brand small { display: block; margin-top: .18rem; color: #7b6450; font: 700 .7rem var(--sans); letter-spacing: .12em; }
+.admin-login-card h1 { margin: .45rem 0; font: 600 2.5rem var(--serif); }
+.admin-login-card h1 em { color: var(--primary-color); }
+.admin-login-card > p { color: #6b6059; line-height: 1.6; margin-bottom: 1.5rem; }
+.admin-login-card .form-label { color: #514740; font-weight: 600; }
+.admin-login-card .form-control { min-height: 46px; }
+.back-link { display: inline-block; margin-top: 1.5rem; color: var(--primary-color); font-size: .9rem; font-weight: 600; text-decoration: none; }

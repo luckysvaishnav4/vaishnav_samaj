@@ -1,0 +1,23 @@
+<section class="contact-banner"><div class="container"><span class="eyebrow eyebrow-light">We are here for you</span><h1>Let's start a <em>conversation.</em></h1><p>Questions, ideas, or just want to say hello? Reach out to the Vaishnav Samaj office.</p></div></section>
+<section class="contact-section"><div class="container"><div class="row g-4">
+  <div class="col-lg-5"><div class="contact-info"><span class="eyebrow">Get in touch</span><h2>We would love to <em>hear from you.</em></h2><p>Our community office is a friendly first point of contact for Samaj enquiries and upcoming activities.</p>
+    <div class="contact-method"><i class="bi bi-geo-alt"></i><div><strong>Samaj office</strong><span>{{ pageContent.address }}</span></div></div>
+    <div class="contact-method"><i class="bi bi-telephone"></i><div><strong>Phone</strong><span>{{ pageContent.phone }}</span><small>{{ pageContent.phoneNote }}</small></div></div>
+    <div class="contact-method"><i class="bi bi-whatsapp"></i><div><strong>WhatsApp</strong><span>{{ pageContent.whatsapp }}</span><small>{{ pageContent.whatsappNote }}</small></div></div>
+    <div class="contact-method"><i class="bi bi-envelope"></i><div><strong>Email</strong><span>{{ pageContent.email }}</span><small>{{ pageContent.emailNote }}</small></div></div>
+    <div class="map-placeholder"><div class="map-lines"></div><div class="map-pin"><i class="bi bi-geo-alt-fill"></i></div><span>{{ pageContent.city }}</span><small>Community office location</small><a [href]="pageContent.mapUrl" target="_blank" rel="noopener noreferrer">Explore in Google Maps <i class="bi bi-arrow-up-right"></i></a></div>
+  </div></div>
+  <div class="col-lg-7"><form class="contact-form" (ngSubmit)="submitMessage()" #contactForm="ngForm"><span class="eyebrow">Send a note</span><h2>How can we help?</h2><p>Share your message and our community team can get back to you. This form is for demonstration only.</p>
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label" for="contactName">Your name <span>*</span></label><input class="form-control" id="contactName" name="name" ngModel required placeholder="Name"></div>
+      <div class="col-md-6"><label class="form-label" for="contactEmail">Email address <span>*</span></label><input class="form-control" type="email" id="contactEmail" name="email" ngModel required email placeholder="you@example.com"></div>
+      <div class="col-12"><label class="form-label" for="subject">Subject</label><select class="form-select" id="subject" name="subject" ngModel><option value="">Choose a topic</option><option>Community information</option><option>Events & activities</option><option>Profile privacy</option><option>Other enquiry</option></select></div>
+      <div class="col-12"><label class="form-label" for="message">Your message <span>*</span></label><textarea class="form-control" id="message" name="message" rows="5" ngModel required placeholder="How can we help?"></textarea></div>
+      <div class="col-12"><label class="contact-consent"><input type="checkbox" name="consent" ngModel required><span>I understand this demo form will not send or store my message.</span></label></div>
+      <div class="col-12"><button class="btn btn-primary btn-lg" [disabled]="contactForm.invalid">Send message <i class="bi bi-arrow-right ms-2"></i></button></div>
+    </div>
+    @if (loadError) { <div class="send-feedback" role="alert">{{ loadError }}</div> }
+    @if (sent) { <div class="send-feedback" role="status"><i class="bi bi-check-circle me-2"></i>This demo form does not deliver messages. Please use verified Samaj office contact information.</div> }
+    <div class="form-privacy"><i class="bi bi-shield-lock me-2"></i>Please do not include sensitive personal or financial details in general enquiries.</div>
+  </form></div>
+</div></div></section>

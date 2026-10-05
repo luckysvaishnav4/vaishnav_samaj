@@ -1,0 +1,12 @@
+.event-card { background: #fff; border: 1px solid #eee6df; border-radius: 5px; overflow: hidden; }
+.event-image { height: 205px; position: relative; background: #eee3d6; overflow: hidden; }
+.event-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.event-image-placeholder { display: grid; place-items: center; width: 100%; height: 100%; color: #a78052; background: linear-gradient(140deg,#f6eee4,#eadbca); font-size: 2rem; }
+.event-card:hover .event-image img { transform: scale(1.04); }
+.event-image span { position: absolute; left: .85rem; bottom: .8rem; background: #fff; color: var(--primary-color); font-weight: 700; font-size: .76rem; padding: .38rem .65rem; text-transform: uppercase; letter-spacing: .06em; }
+.event-body { padding: 1.2rem; }
+.event-date { color: #805c35; font-weight: 700; font-size: .88rem; margin-bottom: .65rem; }
+.event-body h3 { font: 700 1.24rem var(--serif); margin-bottom: .55rem; }
+.event-description { color: #6e635d; font-size: .94rem; line-height: 1.65; min-height: 3.2rem; }
+.event-venue { border-top: 1px solid #f1ebe6; padding-top: .7rem; color: #5f554e; font-size: .86rem; line-height: 1.5; margin: 0; }
+.event-venue i { color: var(--primary-color); }

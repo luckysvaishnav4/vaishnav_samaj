@@ -1,0 +1,33 @@
+@if (isLoading) {
+  <section class="not-found"><div class="container"><p role="status"><span class="spinner-border spinner-border-sm me-2"></span>Loading profile…</p></div></section>
+} @else if (requiresSignIn) {
+  <section class="not-found"><div class="container"><i class="bi bi-shield-lock"></i><h1>Member sign in required</h1><p>Sign in to view community-shared profile details. Private contact information is never shown.</p><a class="btn btn-primary" routerLink="/member-login" [queryParams]="{ returnTo: '/profile/' + profileId }">Member sign in</a></div></section>
+} @else if (error && !profile) {
+  <section class="not-found"><div class="container"><i class="bi bi-exclamation-circle"></i><h1>Unable to load profile</h1><p role="alert">{{ error }}</p><a class="btn btn-outline-primary" routerLink="/matches">Back to matches</a></div></section>
+} @else if (profile; as person) {
+  <section class="profile-banner"><div class="container"><a routerLink="/matches"><i class="bi bi-arrow-left me-2"></i>Back to matches</a><p class="eyebrow eyebrow-light mt-4">A thoughtful introduction</p><h1>Get to know <em>{{ person.name.split(' ')[0] }}</em></h1></div></section>
+  <section class="profile-detail"><div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-4"><div class="portrait-card"><div class="portrait">@if (person.image) { <img [src]="person.image" [alt]="person.name"> } @else { <div class="portrait-placeholder"><i class="bi bi-person"></i></div> }</div><div class="portrait-caption"><i class="bi bi-shield-lock me-2"></i>Contact details are private</div></div>
+        @if (isOwnProfile) { <div class="profile-action-card"><h2>This is your profile</h2><p>Manage its privacy or sign out from your account settings.</p><a class="btn btn-outline-primary w-100" routerLink="/my-profile">Manage privacy</a></div> } @else { <div class="profile-action-card"><h2>Interested in connecting?</h2><p>Send a private interest request. The member's phone and email are not revealed.</p><button class="btn btn-primary w-100" type="button" (click)="sendInterest()" [disabled]="interestSent || isSendingInterest"><i class="bi me-2" [class.bi-heart]="!interestSent" [class.bi-heart-fill]="interestSent"></i>{{ interestSent ? 'Interest sent' : (isSendingInterest ? 'Sending…' : 'Send interest') }}</button>@if (interestSent) { <small class="demo-note"><i class="bi bi-info-circle me-1"></i>@if (demoMode) { Demo only — no request was sent or saved. } @else { Request sent privately to this member. }</small> }@if (error) { <small class="demo-note text-danger" role="alert">{{ error }}</small> }</div> }
+      </div>
+      <div class="col-lg-8">
+        <article class="detail-card">
+          <div class="d-flex flex-wrap align-items-start justify-content-between gap-3"><div><div class="d-flex align-items-center gap-2"><h2>{{ person.name }}</h2>@if (person.verified && demoMode) { <span class="verified-label"><i class="bi bi-patch-check-fill me-1"></i>Demo verified</span> }</div><p class="detail-subtitle"><span class="numeric">{{ person.age }}</span> years <span>·</span> {{ person.city }} <span>·</span> {{ person.gender }}</p></div><span class="demo-profile-label">{{ demoMode ? 'SAMPLE PROFILE' : 'COMMUNITY PROFILE' }}</span></div>
+          <div class="profile-fact-grid">
+            <div><i class="bi bi-flower1"></i><span>Gotra<strong>{{ person.gotra }}</strong></span></div>
+            <div><i class="bi bi-mortarboard"></i><span>Education<strong>{{ person.education }}</strong></span></div>
+            <div><i class="bi bi-briefcase"></i><span>Profession<strong>{{ person.profession }}</strong></span></div>
+            <div><i class="bi bi-geo-alt"></i><span>Based in<strong>{{ person.city }}</strong></span></div>
+          </div>
+        </article>
+        <article class="detail-card"><span class="eyebrow">A little about me</span><h3>In their own words</h3><p class="detail-copy">{{ person.introduction }}</p></article>
+        <article class="detail-card"><span class="eyebrow">Family & background</span><h3>Family values</h3><p class="detail-copy">{{ person.family }}</p><div class="private-line"><i class="bi bi-lock me-2"></i>Family contact details are not displayed publicly.</div></article>
+        <article class="detail-card"><span class="eyebrow">Everyday life</span><h3>Lifestyle & interests</h3><p class="detail-copy">{{ person.lifestyle }}</p></article>
+        <div class="profile-privacy"><i class="bi bi-shield-check"></i><p><strong>Privacy is part of respect.</strong><br>@if (demoMode) { This is a fictional sample profile. } @else { This member chose to share this profile with signed-in community members. } Personal phone numbers and email addresses are never shown.</p></div>
+      </div>
+    </div>
+  </div></section>
+} @else {
+  <section class="not-found"><div class="container"><i class="bi bi-person-exclamation"></i><h1>Profile not found</h1><p>This sample profile may no longer be available. Browse other community introductions instead.</p><a class="btn btn-primary" routerLink="/matches">Explore matches</a></div></section>
+}

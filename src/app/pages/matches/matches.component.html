@@ -1,0 +1,23 @@
+<section class="matches-banner"><div class="container"><div class="matches-copy"><span class="eyebrow eyebrow-light">A thoughtful way to meet</span><h1>Meet someone who<br><em>shares your roots.</em></h1><p>Take your time. Explore profiles. Start a conversation when it feels right — with privacy and respect at every step.</p><a class="btn btn-gold" href="#profiles">Explore profiles <i class="bi bi-arrow-down ms-2"></i></a></div><div class="privacy-seal"><i class="bi bi-shield-lock"></i><span>Respectful<br>by design</span></div></div></section>
+<section class="match-intro"><div class="container"><div class="row g-3 text-center">
+  <div class="col-md-4"><div class="promise"><i class="bi bi-eye-slash"></i><div><strong>Your privacy comes first</strong><span>No public phone numbers or email addresses.</span></div></div></div>
+  <div class="col-md-4"><div class="promise"><i class="bi bi-patch-check"></i><div><strong>Verification-aware</strong><span>Profiles are member-provided; no verification is claimed.</span></div></div></div>
+  <div class="col-md-4"><div class="promise"><i class="bi bi-heart"></i><div><strong>Make the first move</strong><span>Interest requests are sent privately to the member.</span></div></div></div>
+</div></div></section>
+<section id="profiles" class="match-list"><div class="container">
+  <div class="match-heading"><div><span class="eyebrow">A new chapter starts with a hello</span><h2>Thoughtful <em>introductions</em></h2><p>@if (demoMode) { Browse fictional sample profiles created for this website preview. No contact requests are stored. } @else { Browse community-shared profiles. Your email and phone are not shown, and interest requests go only to the selected member. }</p></div></div>
+  @if (isLoading) { <p class="match-state" role="status"><span class="spinner-border spinner-border-sm me-2"></span>Loading member profiles…</p> }
+  @if (signInRequired) { <div class="match-state"><h3>Member sign in required</h3><p>Sign in to view real community-shared profiles. The sample preview is not shown as real members.</p><a class="btn btn-primary" routerLink="/member-login" [queryParams]="{ returnTo: '/matches' }">Member sign in</a><a class="btn btn-outline-primary ms-2" routerLink="/register">Create a profile</a></div> }
+  @if (loadError) { <p class="match-state match-error" role="alert">{{ loadError }}</p> }
+  @if (!isLoading && !signInRequired && !loadError) {
+  <button class="filter-toggle d-md-none" type="button" [attr.aria-expanded]="filtersOpen" aria-controls="matchFilters" (click)="filtersOpen = !filtersOpen">
+    <span><i class="bi bi-sliders2 me-2"></i>Filters & search</span>
+    <i class="bi" [class.bi-chevron-down]="!filtersOpen" [class.bi-chevron-up]="filtersOpen"></i>
+  </button>
+  <div class="match-controls" id="matchFilters" [class.filters-open]="filtersOpen"><div class="category-tabs" role="tablist" aria-label="Profile categories">@for (category of categories; track category) { <button type="button" role="tab" [attr.aria-selected]="selectedCategory === category" [class.active]="selectedCategory === category" (click)="selectCategory(category)">{{ !demoMode && category === 'Recommended' ? 'All profiles' : category }}</button> }</div><label class="match-search"><i class="bi bi-search"></i><span class="visually-hidden">Search profiles</span><input type="search" [(ngModel)]="searchTerm" placeholder="Search by name, city or work"></label></div>
+  <div class="results-label"><span class="numeric">{{ filteredProfiles.length }}</span> profile{{ filteredProfiles.length === 1 ? '' : 's' }} <span>· {{ selectedCategory }}</span></div>
+  @if (filteredProfiles.length) { <div class="row g-3">@for (profile of filteredProfiles; track profile.id) { <div class="col-md-6 col-lg-4 col-xl-3"><app-profile-card [profile]="profile" /></div> }</div> }
+  @else { <div class="empty-state"><i class="bi bi-search"></i><h3>No profiles found</h3><p>Try another search, or choose a different profile category.</p></div> }
+  @if (demoMode) { <div class="demo-disclaimer"><i class="bi bi-info-circle me-2"></i>All profiles are fictional sample data. Interest actions are visual demos and are not delivered to anyone.</div> }
+  }
+</div></section>

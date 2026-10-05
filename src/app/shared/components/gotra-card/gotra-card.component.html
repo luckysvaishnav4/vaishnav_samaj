@@ -1,0 +1,8 @@
+<article class="gotra-card h-100">
+  <span class="gotra-symbol"><i class="bi bi-flower1"></i></span>
+  <h3>{{ gotra.name }}</h3>
+  <span class="gotra-tradition">{{ gotra.tradition }}</span>
+  <p>{{ gotra.description }}</p>
+  <div class="gotra-members"><i class="bi bi-people me-2"></i><span class="numeric">{{ gotra.members }}</span> {{ gotra.isDemo ? 'demo ' : '' }}{{ gotra.isDemo ? (gotra.members === 1 ? 'profile' : 'profiles') : (gotra.members === 1 ? 'member' : 'members') }}</div>
+  <a class="gotra-link" [routerLink]="['/members']" [queryParams]="{ gotra: gotra.name }">प्रोफाइल देखें <i class="bi bi-arrow-right ms-1"></i></a>
+</article>

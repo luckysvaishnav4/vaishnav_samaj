@@ -1,0 +1,24 @@
+<section class="member-login-page">
+  <div class="member-login-card">
+    <a routerLink="/" class="member-brand"><i class="bi bi-flower1"></i><span>Vaishnav Samaj<small>MEMBER ACCESS</small></span></a>
+    <span class="eyebrow">Welcome back</span><h1>Member <em>sign in</em></h1>
+    <p>Sign in to manage your private profile and view community-shared member listings.</p>
+    @if (!api.isConfigured) {
+      <div class="alert alert-info" role="status">Member accounts are not configured in this preview. You can still explore the sample listings.</div>
+    } @else {
+      <form (ngSubmit)="submit()" #loginForm="ngForm">
+        <label class="form-label" for="member-email">Email address</label>
+        <input class="form-control mb-3" id="member-email" name="email" type="email" [(ngModel)]="email" required autocomplete="username">
+        <label class="form-label" for="member-password">Password</label>
+        <input class="form-control mb-3" id="member-password" name="password" type="password" [(ngModel)]="password" required autocomplete="current-password">
+        @if (error) { <div class="alert alert-danger" role="alert">{{ error }}</div> }
+        <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isSubmitting">
+          @if (isSubmitting) { <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span> }
+          Sign in securely
+        </button>
+      </form>
+    }
+    <p class="member-signup">New here? <a routerLink="/register">Create a private profile</a></p>
+    <a routerLink="/" class="back-link"><i class="bi bi-arrow-left me-2"></i>Back to community site</a>
+  </div>
+</section>
