@@ -9,9 +9,29 @@
 .hero-copy > p { max-width: 560px; color: rgba(255,255,255,.86); font-size: 1.1rem; line-height: 1.75; }
 .hero-trust { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; color: rgba(255,255,255,.84); font-size: .9rem; }
 .hero-trust i { color: #e2c27c; }
-.hero-stamp { position: absolute; right: 8%; bottom: 3rem; z-index: 1; width: 105px; height: 105px; border: 1px solid rgba(246,220,169,.58); color: #f4dba4; border-radius: 50%; display: grid; place-items: center; text-align: center; font: 1.4rem var(--serif); }
-.hero-stamp span { font-size: .72rem; }
-.hero-stamp i { font-size: 1.1rem; }
+.hero-stamp {
+  position: absolute;
+  right: 8%;
+  bottom: 3rem;
+  z-index: 1;
+  width: 140px;
+  height: 140px;
+  border: 2px solid rgba(246,220,169,.6);
+  color: #f4dba4;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font: 1.5rem var(--serif);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,.15);
+}
+.hero-stamp span {
+  font-size: .72rem;
+}
+.hero-stamp i {
+  font-size: 1.1rem;
+}
 .stats-strip { background: #fff; border-bottom: 1px solid #efe8e0; }
 .stat-item { display: flex; flex-direction: column; text-align: center; padding: 1.4rem .75rem; border-right: 1px solid #f0e9e3; }
 .stat-item:last-child { border: 0; }

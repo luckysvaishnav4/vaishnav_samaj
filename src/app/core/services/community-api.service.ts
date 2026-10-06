@@ -23,6 +23,13 @@ export class CommunityApiService {
     return this.configErrorMessage;
   }
 
+  canAttemptRequests(): boolean {
+    // If has session token, can always attempt
+    if (this.hasSessionToken) return true;
+    // If no base URL but trying sign-in, allow it (will show error)
+    return !this.apiBaseUrl || Boolean(this.apiBaseUrl);
+  }
+
   async initialize(): Promise<void> {
     if (this.initialized) return;
     try {
@@ -99,7 +106,7 @@ export class CommunityApiService {
     body?: unknown,
     responseType: 'json' | 'blob' = 'json'
   ): Promise<T> {
-    if (!this.apiBaseUrl) {
+    if (!this.apiBaseUrl && !this.canAttemptRequests()) {
       throw new Error(this.configErrorMessage ?? 'The PostgreSQL API is not configured.');
     }
     const token = typeof window !== 'undefined' ? window.sessionStorage.getItem(this.tokenKey) : null;

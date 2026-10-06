@@ -421,16 +421,6 @@ export class AdminComponent implements OnInit {
     this.gotraDraft = this.emptyGotra();
     this.galleryDraft = this.emptyGalleryItem();
   }
-  cancelEdit(): void {
-    this.editingEventId = '';
-    this.editingAnnouncementId = '';
-    this.editingGotraId = '';
-    this.editingGalleryId = '';
-    this.eventDraft = this.emptyEvent();
-    this.announcementDraft = this.emptyAnnouncement();
-    this.gotraDraft = this.emptyGotra();
-    this.galleryDraft = this.emptyGalleryItem();
-  }
 
   getCurrentPageLabel(): string {
     return this.pageOptions.find(o => o.key === this.pageKey)?.label ?? '';

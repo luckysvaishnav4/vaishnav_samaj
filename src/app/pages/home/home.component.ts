@@ -17,7 +17,7 @@ import { EventCardComponent } from '../../shared/components/event-card/event-car
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  gotras: CommunityGotraRow[];
+  gotras: Gotra[];
   events: CommunityEvent[];
   announcements: Announcement[];
   pageContent: HomePageContent = {
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
       this.backend.getPublishedAnnouncements()
     ]);
     if (results[0].status === 'fulfilled') this.pageContent = results[0].value;
-    if (results[1].status === 'fulfilled') this.gotras = results[1].value;
+    if (results[1].status === 'fulfilled') this.gotras = results[1].value.map((g: CommunityGotraRow) => ({ ...g, members: g.members ?? 0 } as Gotra));
     if (results[2].status === 'fulfilled') this.events = results[2].value;
     if (results[3].status === 'fulfilled') this.announcements = results[3].value;
   }
